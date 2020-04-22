@@ -1,62 +1,53 @@
-import React from 'react';
-import { axiosWithAuth } from '../utils/axiosWithAuth';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-class Login extends React.Component {
-	state = {
-		credentials: {
-			username: '',
-			password: '',
-		},
-	};
+const Login = (props) => {
+	const [credentials, setCredentials] = useState({
+		username: '',
+		password: '',
+	});
 
-	handleChange = (e) => {
-		this.setState({
-			credentials: {
-				...this.state.credentials,
-				[e.target.name]: e.target.value,
-			},
+	const handleChange = (e) => {
+		setCredentials({
+			...credentials,
+			[e.target.name]: e.target.value,
 		});
 	};
 
-	login = (e) => {
+	const login = (e) => {
 		e.preventDefault();
-		axiosWithAuth()
-			.post('/api/login', this.state.credentials)
+		console.log(props.history);
+		axios
+			.post('http://localhost:5000/api/login', credentials)
 			.then((res) => {
-				console.log('data from api call', res);
-				// res.data.payload
-				// redux - send the token to the redux store
-				// browser storage - localStorage (this is probably the least secure choice)
-				// cookies
 				localStorage.setItem('token', JSON.stringify(res.data.payload));
-				this.props.history.push('/protected');
+				props.history.push('/friends');
 			})
-			.catch((err) => console.log({ err }));
+			.catch((err) => alert('You need to login first', err));
 	};
 
-	render() {
-		return (
-			<div>
-				<form onSubmit={this.login}>
-					<input
-						type="text"
-						name="username"
-						placeholder="Username"
-						value={this.state.credentials.username}
-						onChange={this.handleChange}
-					/>
-					<input
-						type="password"
-						name="password"
-						placeholder="Pasword"
-						value={this.state.credentials.password}
-						onChange={this.handleChange}
-					/>
-					<button>Log in </button>
-				</form>
-			</div>
-		);
-	}
-}
+	return (
+		<form className="login-form" onSubmit={login}>
+			<input
+				className="login input"
+				placeholder="Username"
+				name="username"
+				value={credentials.username}
+				onChange={handleChange}
+			/>
+			<input
+				className="login input"
+				placeholder="Password"
+				name="password"
+				type="password"
+				value={credentials.password}
+				onChange={handleChange}
+			/>
+			<button className="login button" type="submit">
+				Login
+			</button>
+		</form>
+	);
+};
 
 export default Login;
