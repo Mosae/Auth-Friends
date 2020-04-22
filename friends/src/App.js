@@ -1,13 +1,28 @@
 import React from 'react';
 import { BrowserRoute as Router, Route, Link, Switch } from 'react-router-dom';
-import './App.css';
+
 import Login from './components/Login';
 
 function App() {
 	return (
-		<div className="App">
-			<Login />
-		</div>
+		<Router>
+			<div className="App">
+				<ul>
+					<li>
+						<Link to="/login">Login</Link>
+					</li>
+					<li>
+						<link to="protected">Protected Page</link>
+					</li>
+				</ul>
+				<Switch>
+					{/* <PrivateRoute exact path="/protected" /> */}
+					<Route path="/login" component={Login} />
+					<Route component={Login} />
+				</Switch>
+				{/* <Login /> */}
+			</div>
+		</Router>
 	);
 }
 

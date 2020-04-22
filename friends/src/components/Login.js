@@ -23,6 +23,7 @@ class Login extends React.Component {
 		axiosWithAuth()
 			.post('/api/login', this.state.credentials)
 			.then((res) => {
+				console.log('data from api call', res);
 				// res.data.payload
 				// redux - send the token to the redux store
 				// browser storage - localStorage (this is probably the least secure choice)
