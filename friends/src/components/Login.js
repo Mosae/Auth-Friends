@@ -1,5 +1,5 @@
 import React from 'react';
-//import { axiosWithAuth } from '../utils/axiosWithAuth';
+import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 class Login extends React.Component {
 	state = {
@@ -9,11 +9,26 @@ class Login extends React.Component {
 		},
 	};
 
+	handleChange = (e) => {
+		this.setState({
+			credentials: {
+				...this.state.credentials,
+				[e.target.name]: e.target.value,
+			},
+		});
+	};
+
+	login = (e) => {
+		e.preventDefault();
+	};
+
 	render() {
 		return (
 			<div>
 				<form>
 					<input type="text" name="username" placeholder="Username" />
+					<input type="password" name="password" placeholder="Pasword" />
+					<button>Log in </button>
 				</form>
 			</div>
 		);
