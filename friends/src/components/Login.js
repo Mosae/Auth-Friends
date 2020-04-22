@@ -20,14 +20,37 @@ class Login extends React.Component {
 
 	login = (e) => {
 		e.preventDefault();
+		axiosWithAuth()
+			.post('/api/login', this.state.credentials)
+			.then((res) => {
+				// res.data.payload
+				// redux - send the token to the redux store
+				// browser storage - localStorage (this is probably the least secure choice)
+				// cookies
+				localStorage.setItem('token', JSON.stringify(res.data.payload));
+				this.props.history.push('/protected');
+			})
+			.catch((err) => console.log({ err }));
 	};
 
 	render() {
 		return (
 			<div>
-				<form>
-					<input type="text" name="username" placeholder="Username" />
-					<input type="password" name="password" placeholder="Pasword" />
+				<form onSubmit={this.login}>
+					<input
+						type="text"
+						name="username"
+						placeholder="Username"
+						value={this.state.credentials.username}
+						onChange={this.handleChange}
+					/>
+					<input
+						type="password"
+						name="password"
+						placeholder="Pasword"
+						value={this.state.credentials.password}
+						onChange={this.handleChange}
+					/>
 					<button>Log in </button>
 				</form>
 			</div>
