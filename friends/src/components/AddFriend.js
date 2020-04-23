@@ -13,7 +13,8 @@ const AddFriend = (props) => {
 		axiosWithAuth()
 			.post('/friends', newFriend)
 			.then((res) => {
-				console.log(res);
+				console.log('add Res', res);
+				props.setFriends(res.data);
 				props.history.push('localhost:3000/friends');
 			})
 			.catch((err) => console.log(err));

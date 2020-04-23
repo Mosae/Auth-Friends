@@ -5,6 +5,8 @@ import './App.css';
 import Login from './components/Login';
 import FriendsList from './components/FriendsList';
 import AddFriend from './components/AddFriend';
+import ProtectedRoute from './components/ProtectedRoute';
+
 function App() {
 	return (
 		<Router>
@@ -18,9 +20,10 @@ function App() {
 				</Link>
 			</div>
 			<Switch>
-				<Route path="/friends" component={FriendsList} />
+				<ProtectedRoute path="/friends" component={FriendsList} />
 				<Route path="/login" component={Login} />
 				<Route component={Login} />
+
 				<Route path="/addfriend" component={AddFriend} />
 			</Switch>
 		</Router>

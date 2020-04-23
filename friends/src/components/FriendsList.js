@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 import Friend from './Friend';
+import AddFriend from './AddFriend';
 
 const FriendsList = (props) => {
+	let history = useHistory();
 	const [friends, setFriends] = useState([]);
 
 	useEffect(() => {
@@ -19,7 +22,8 @@ const FriendsList = (props) => {
 
 	const handleClick = (props) => {
 		console.log('These are the props', props);
-		props.history.push('/friends');
+		//props.history.push('/friends');
+		history.push('/friends');
 	};
 
 	return (
@@ -27,9 +31,10 @@ const FriendsList = (props) => {
 			{friends.map((friend) => (
 				<Friend key={friend.id} friend={friend} />
 			))}
-			<button className="add-friend" onClick={handleClick}>
+			<AddFriend setFriends={setFriends} />
+			{/* <button className="add-friend" onClick={handleClick}>
 				Add Friend
-			</button>
+			</button> */}
 		</div>
 	);
 };
